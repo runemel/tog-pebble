@@ -5,6 +5,10 @@ var menuItems = [
     title: 'Stasjoner'
   },
   {
+    title: 'I nærheten',
+    subtitle: 'Under 1 mil'
+  },
+  {
     title: 'Favoritter'
   }
   
@@ -22,11 +26,15 @@ var menu = new UI.Menu({
   highlightBackgroundColor: colors.menu.highlightBackgroundColor
 });
 menu.on('select', function(e) {
-  if(e.itemIndex === 0){
+  if(e.itemIndex === 0){ //Stasjoner
     var alphabetMenu = require('alphabetMenu');
     alphabetMenu.show();
   }
-  else if(e.itemIndex === 1){
+  else if(e.itemIndex === 1){ //I nærheten
+    var nearbyMenu = require('nearbyMenu');
+    nearbyMenu.show();
+  }
+  else if(e.itemIndex === 2){ //Favoritter
     var favoritesMenu = require('favoritesMenu');
     favoritesMenu.show();
   }
