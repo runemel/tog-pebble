@@ -13,11 +13,16 @@ function fillAlphabetList(){
   }
 }
 
+var colors = require('colors');
+
 var stationsAlphabetMenu = new UI.Menu({
   sections: [{
     title: 'A-Å',
     items: alphabetItems
-  }]
+  }],
+  backgroundColor: colors.menu.backgroundColor,
+  textColor: colors.menu.textColor,
+  highlightBackgroundColor: colors.menu.highlightBackgroundColor
 });
 
 stationsAlphabetMenu.on('select', function(e) {

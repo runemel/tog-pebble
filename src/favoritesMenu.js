@@ -3,11 +3,16 @@ var Settings = require('settings');
 
 var favorites = [];
 
+var colors = require('colors');
+
 var favoritesMenu = new UI.Menu({
   sections: [{
     title: 'Favoritter',
     items: favorites
-  }]
+  }],
+  backgroundColor: colors.menu.backgroundColor,
+  textColor: colors.menu.textColor,
+  highlightBackgroundColor: colors.menu.highlightBackgroundColor
 });
 favoritesMenu.on('select', function(e) {
   var selectedStation = favorites[e.itemIndex];

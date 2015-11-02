@@ -3,11 +3,16 @@ var ajax = require('ajax');
 
 var trainStations = [];
 
+var colors = require('colors');
+
 var stationsMenu = new UI.Menu({
   sections: [{
     title: 'Stasjoner',
     items: trainStations
-  }]
+  }],
+  backgroundColor: colors.menu.backgroundColor,
+  textColor: colors.menu.textColor,
+  highlightBackgroundColor: colors.menu.highlightBackgroundColor
 });
 stationsMenu.on('select', function(e) {
   var selectedStation = trainStations[e.itemIndex];

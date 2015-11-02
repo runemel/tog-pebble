@@ -10,10 +10,16 @@ var menuItems = [
   
 ];
 
+var colors = require('colors');
+
 var menu = new UI.Menu({
   sections: [{
+    title: 'Togtider',
     items: menuItems
-  }]
+  }],
+  backgroundColor: colors.menu.backgroundColor,
+  textColor: colors.menu.textColor,
+  highlightBackgroundColor: colors.menu.highlightBackgroundColor
 });
 menu.on('select', function(e) {
   if(e.itemIndex === 0){

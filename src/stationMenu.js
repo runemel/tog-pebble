@@ -33,11 +33,16 @@ var fillDepartures = function(data){
   }
 };
 
+var colors = require('colors');
+
 var stationMenu = new UI.Menu({
   sections: [{
     title: 'Avganger',
     items: departures
-  }]
+  }],
+  backgroundColor: colors.menu.backgroundColor,
+  textColor: colors.menu.textColor,
+  highlightBackgroundColor: colors.menu.highlightBackgroundColor
 });
 stationMenu.on('select', function(e) {
   if(e.itemIndex === 0){
