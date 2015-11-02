@@ -20,6 +20,19 @@ var isFavorite = function(){
   return false;
 };
 
+var setFavoriteText = function(){
+  departures[0] = {title: ' ', subtitle: isFavorite() ? 'Fjern favoritt' : 'Legg til favoritt'};
+}
+
+var fillDepartures = function(data){
+  departures.length = 0;
+  setFavoriteText();
+  for(var i in data){
+    var departure = data[i];
+    departures.push({title: departure.DestinationDisplay, subtitle: new Date(departure.ExpectedDepartureTime).format('ddd d. mmm HH:MM')});
+  }
+};
+
 var stationMenu = new UI.Menu({
   sections: [{
     title: 'Avganger',
@@ -28,24 +41,30 @@ var stationMenu = new UI.Menu({
 });
 stationMenu.on('select', function(e) {
   if(e.itemIndex === 0){
+    var favorites = Settings.data('favorites');
     if(isFavorite()){
-      
+      var indexToRemove = -1;
+      for(var i in favorites){
+        var favorite = favorites[i];
+        if(favorite.stopPointRef === station.stopPointRef){
+          indexToRemove = i;
+        }
+      }
+      if(indexToRemove > -1){
+        favorites.splice(indexToRemove, 1);
+        Settings.data('favorites', favorites);
+      }
     }
     else{
-      var favorites = Settings.data('favorites');
       console.log('Adding ', station, ' to ', favorites);
       favorites.push(station);
       Settings.data('favorites', favorites);
     }
+    
+    setFavoriteText();
+    stationMenu.items(0, departures);
   }
 });
-
-var fillDepartures = function(data){
-  for(var i in data){
-    var departure = data[i];
-    departures.push({title: departure.DestinationDisplay, subtitle: new Date(departure.ExpectedDepartureTime).format('ddd d. mmm HH:MM')});
-  }
-};
 
 exports.show = function(s){
   console.log('Setting station to ', s);
@@ -56,8 +75,6 @@ exports.show = function(s){
       type: 'json'
     },
     function(data) {
-        departures.length = 0;
-        departures.push({title: ' ', subtitle: isFavorite() ? 'Fjern som favoritt' : 'Legg til som favoritt'});
         fillDepartures(data);
         stationMenu.show();
       },

@@ -1,4 +1,4 @@
-var resetFavorites = true;
+var resetFavorites = false;
 if(resetFavorites){
   require('resetFavorites');
 }
