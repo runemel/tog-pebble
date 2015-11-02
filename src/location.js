@@ -1,9 +1,5 @@
-var closeTresholdInKm = 10;
-
-
-var isClose = function(origin, destination){
+var isClose = function(closeTresholdInKm, origin, destination){
   var distanceInKm = getDistanceFromLatLonInKm(origin.lat, origin.lng, destination.lat, destination.lng);
-  console.log(distanceInKm);
   return distanceInKm < closeTresholdInKm;
 };
 
