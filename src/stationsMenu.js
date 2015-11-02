@@ -17,7 +17,7 @@ var stationsMenu = new UI.Menu({
 stationsMenu.on('select', function(e) {
   var selectedStation = trainStations[e.itemIndex];
   var stationMenu = require('stationMenu');
-  stationMenu.show(selectedStation, trainStations);
+  stationMenu.show(selectedStation);
 });
 
 var fillStations = function(data, letterChosen){

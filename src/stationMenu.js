@@ -23,14 +23,14 @@ var isFavorite = function(){
 
 var setFavoriteText = function(){
   departures[0] = {title: ' ', subtitle: isFavorite() ? 'Fjern favoritt' : 'Legg til favoritt'};
-}
+};
 
 var fillDepartures = function(data){
   departures.length = 0;
   setFavoriteText();
   for(var i in data){
     var departure = data[i];
-    departures.push({title: departure.DestinationDisplay, subtitle: new Date(departure.ExpectedDepartureTime).format('ddd d. mmm HH:MM'), destination: departure.DestinationName});
+    departures.push({title: departure.DestinationDisplay, subtitle: new Date(departure.ExpectedDepartureTime).format('ddd d. mmm HH:MM')});
   }
 };
 
