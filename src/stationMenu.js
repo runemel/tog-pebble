@@ -5,6 +5,7 @@ var ajax = require('ajax');
 var Settings = require('settings');
 
 var station = {};
+
 var departures = [];
 
 var isFavorite = function(){
@@ -29,7 +30,7 @@ var fillDepartures = function(data){
   setFavoriteText();
   for(var i in data){
     var departure = data[i];
-    departures.push({title: departure.DestinationDisplay, subtitle: new Date(departure.ExpectedDepartureTime).format('ddd d. mmm HH:MM')});
+    departures.push({title: departure.DestinationDisplay, subtitle: new Date(departure.ExpectedDepartureTime).format('ddd d. mmm HH:MM'), destination: departure.DestinationName});
   }
 };
 
@@ -72,7 +73,6 @@ stationMenu.on('select', function(e) {
 });
 
 exports.show = function(s){
-  console.log('Setting station to ', s);
   station = s;
   ajax(
     {

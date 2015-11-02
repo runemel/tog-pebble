@@ -5,8 +5,7 @@ var menuItems = [
     title: 'Stasjoner'
   },
   {
-    title: 'I nærheten',
-    subtitle: 'Under 1 mil'
+    title: 'I nærheten'
   },
   {
     title: 'Favoritter'
