@@ -19,7 +19,7 @@ var fillStations = function(savedFavorites){
   favorites.length = 0;
   for(var i in savedFavorites){
     var station = savedFavorites[i];
-    favorites.push({title: station.Name, stopPointRef: station.StopPointRef});
+    favorites.push({title: station.title, stopPointRef: station.stopPointRef});
   }
 };
 

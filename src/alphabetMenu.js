@@ -1,5 +1,4 @@
 var UI = require('ui');
-require('dateFormat');
 
 var alphabetItems = [];
 var alphabet = '';
