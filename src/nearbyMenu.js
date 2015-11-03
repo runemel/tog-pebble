@@ -33,7 +33,7 @@ var fillStations = function(data, distance){
         var isClose = proximityResult.isClose;
         var distanceInKm = proximityResult.distanceInKm;
         if(isClose){
-          trainStations.push({title: station.Name, subtitle: distanceInKm + 'km', distance: distanceInKm, stopPointRef: station.StopPointRef});
+          trainStations.push({title: station.Name, subtitle: distanceInKm + 'km', distance: distanceInKm, stopPointRef: station.StopPointRef, latitude: station.Latitude, longitude: station.Longitude});
         }
         trainStations = trainStations.sort(
           function(a, b){return a.distance-b.distance;}

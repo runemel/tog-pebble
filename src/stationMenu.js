@@ -30,7 +30,7 @@ var fillDepartures = function(data){
   setFavoriteText();
   for(var i in data){
     var departure = data[i];
-    departures.push({title: departure.DestinationDisplay, subtitle: new Date(departure.ExpectedDepartureTime).format('ddd d. mmm HH:MM')});
+    departures.push({title: departure.DestinationDisplay, subtitle: new Date(departure.ExpectedDepartureTime).format('d. mmm HH:MM') + ' Spor ' + departure.DeparturePlatformName});
   }
 };
 

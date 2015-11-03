@@ -30,7 +30,7 @@ var fillStations = function(data, letterChosen){
         var proximityResult = location.getProximity(null, {lat: position.coords.latitude, lng: position.coords.longitude}, {lat: station.Latitude, lng: station.Longitude});
         var distanceInKm = proximityResult.distanceInKm;
         if(station.Name.substring(0, 1) === letterChosen){
-          trainStations.push({title: station.Name, subtitle: distanceInKm + 'km', distance: distanceInKm, stopPointRef: station.StopPointRef});
+          trainStations.push({title: station.Name, subtitle: distanceInKm + 'km', distance: distanceInKm, stopPointRef: station.StopPointRef, latitude: station.Latitude, longitude: station.Longitude});
         }
       }
 

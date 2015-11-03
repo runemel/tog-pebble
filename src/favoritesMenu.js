@@ -5,27 +5,43 @@ var favorites = [];
 
 var colors = require('colors');
 
-var favoritesMenu = new UI.Menu({
-  sections: [{
-    title: 'Favoritter',
-    items: favorites
-  }],
-  backgroundColor: colors.menu.backgroundColor,
-  textColor: colors.menu.textColor,
-  highlightBackgroundColor: colors.menu.highlightBackgroundColor
-});
-favoritesMenu.on('select', function(e) {
-  var selectedStation = favorites[e.itemIndex];
-  var stationMenu = require('stationMenu');
-  stationMenu.show(selectedStation);
-});
-
 var fillStations = function(savedFavorites){
   favorites.length = 0;
-  for(var i in savedFavorites){
-    var station = savedFavorites[i];
-    favorites.push({title: station.title, stopPointRef: station.stopPointRef});
-  }
+  var location = require('location');
+  navigator.geolocation.getCurrentPosition(
+    function(position){
+      for(var i in savedFavorites){
+        var station = savedFavorites[i];
+        var proximityResult = location.getProximity(null, {lat: position.coords.latitude, lng: position.coords.longitude}, {lat: station.latitude, lng: station.longitude});
+        var distanceInKm = proximityResult.distanceInKm;
+        favorites.push({title: station.title, subtitle: distanceInKm + 'km', distance: distanceInKm, stopPointRef: station.stopPointRef, latitude: station.latitude, longitude: station.longitude});
+      }
+      
+      favorites = favorites.sort(
+        function(a, b){return a.distance-b.distance;}
+      );
+
+      var favoritesMenu = new UI.Menu({
+        sections: [{
+          title: 'Favoritter',
+          items: favorites
+        }],
+        backgroundColor: colors.menu.backgroundColor,
+        textColor: colors.menu.textColor,
+        highlightBackgroundColor: colors.menu.highlightBackgroundColor
+      });
+      favoritesMenu.on('select', function(e) {
+        var selectedStation = favorites[e.itemIndex];
+        var stationMenu = require('stationMenu');
+        stationMenu.show(selectedStation);
+      });
+      
+      favoritesMenu.show();
+    },
+    function(err){
+      console.log('location error (' + err.code + '): ' + err.message);
+    }
+  );
 };
 
 exports.show = function(){
