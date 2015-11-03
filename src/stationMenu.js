@@ -36,42 +36,6 @@ var fillDepartures = function(data){
 
 var colors = require('colors');
 
-var stationMenu = new UI.Menu({
-  sections: [{
-    title: 'Avganger',
-    items: departures
-  }],
-  backgroundColor: colors.menu.backgroundColor,
-  textColor: colors.menu.textColor,
-  highlightBackgroundColor: colors.menu.highlightBackgroundColor
-});
-stationMenu.on('select', function(e) {
-  if(e.itemIndex === 0){
-    var favorites = Settings.data('favorites');
-    if(isFavorite()){
-      var indexToRemove = -1;
-      for(var i in favorites){
-        var favorite = favorites[i];
-        if(favorite.stopPointRef === station.stopPointRef){
-          indexToRemove = i;
-        }
-      }
-      if(indexToRemove > -1){
-        favorites.splice(indexToRemove, 1);
-        Settings.data('favorites', favorites);
-      }
-    }
-    else{
-      console.log('Adding ', station, ' to ', favorites);
-      favorites.push(station);
-      Settings.data('favorites', favorites);
-    }
-    
-    setFavoriteText();
-    stationMenu.items(0, departures);
-  }
-});
-
 exports.show = function(s){
   station = s;
   ajax(
@@ -81,6 +45,44 @@ exports.show = function(s){
     },
     function(data) {
         fillDepartures(data);
+      
+        var stationMenu = new UI.Menu({
+          sections: [{
+            title: station.title,
+            items: departures
+          }],
+          backgroundColor: colors.menu.backgroundColor,
+          textColor: colors.menu.textColor,
+          highlightBackgroundColor: colors.menu.highlightBackgroundColor
+        });
+      
+        stationMenu.on('select', function(e) {
+          if(e.itemIndex === 0){
+            var favorites = Settings.data('favorites');
+            if(isFavorite()){
+              var indexToRemove = -1;
+              for(var i in favorites){
+                var favorite = favorites[i];
+                if(favorite.stopPointRef === station.stopPointRef){
+                  indexToRemove = i;
+                }
+              }
+              if(indexToRemove > -1){
+                favorites.splice(indexToRemove, 1);
+                Settings.data('favorites', favorites);
+              }
+            }
+            else{
+              console.log('Adding ', station, ' to ', favorites);
+              favorites.push(station);
+              Settings.data('favorites', favorites);
+            }
+            
+            setFavoriteText();
+            stationMenu.items(0, departures);
+          }
+        });
+      
         stationMenu.show();
       },
       function(error) {
