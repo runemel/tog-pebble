@@ -40,7 +40,7 @@ exports.show = function(s){
   station = s;
   ajax(
     {
-      url: 'http://m.jbv.no/internett1/index.php?t=mobile.api_v3&f=stopMonitoring&StopVisitTypes=Departure&MonitoringRef=' + station.stopPointRef + '&DetailLevel=iphone&MaximumNumberOfCalls=10',
+      url: 'http://m.jbv.no/internett1/index.php?t=mobile.api_v3&f=stopMonitoring&StopVisitTypes=Departure&MonitoringRef=' + station.stopPointRef + '&DetailLevel=iphone&MaximumNumberOfCalls=50',
       type: 'json'
     },
     function(data) {
@@ -48,7 +48,6 @@ exports.show = function(s){
       
         var stationMenu = new UI.Menu({
           sections: [{
-            //Fix issue #2
             title: station.title,
             items: departures
           }],
