@@ -22,12 +22,24 @@ stationsMenu.on('select', function(e) {
 
 var fillStations = function(data, letterChosen){
   trainStations.length = 0;
-  for(var i in data){
-    var station = data[i];
-    if(station.Name.substring(0, 1) === letterChosen){
-      trainStations.push({title: station.Name, stopPointRef: station.StopPointRef});
+  var location = require('location');
+  navigator.geolocation.getCurrentPosition(
+    function(position){
+      for(var i in data){
+        var station = data[i];
+        var proximityResult = location.getProximity(null, {lat: position.coords.latitude, lng: position.coords.longitude}, {lat: station.Latitude, lng: station.Longitude});
+        var distanceInKm = proximityResult.distanceInKm;
+        if(station.Name.substring(0, 1) === letterChosen){
+          trainStations.push({title: station.Name, subtitle: distanceInKm + 'km', distance: distanceInKm, stopPointRef: station.StopPointRef});
+        }
+      }
+
+      stationsMenu.show();
+    },
+    function(err){
+      console.log('location error (' + err.code + '): ' + err.message);
     }
-  }
+  );
 };
 
 exports.show = function(letterChosen){
@@ -38,7 +50,6 @@ exports.show = function(letterChosen){
     },
     function(data) {
       fillStations(data, letterChosen);
-      stationsMenu.show();
     },
     function(error) {
       console.log('Download failed: ' + error);

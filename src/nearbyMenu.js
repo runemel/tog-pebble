@@ -29,9 +29,15 @@ var fillStations = function(data, distance){
     function(position){
       for(var i in data){
         var station = data[i];
-        if(location.isClose(distance, {lat: position.coords.latitude, lng: position.coords.longitude}, {lat: station.Latitude, lng: station.Longitude})){
-          trainStations.push({title: station.Name, stopPointRef: station.StopPointRef});
+        var proximityResult = location.getProximity(distance, {lat: position.coords.latitude, lng: position.coords.longitude}, {lat: station.Latitude, lng: station.Longitude});
+        var isClose = proximityResult.isClose;
+        var distanceInKm = proximityResult.distanceInKm;
+        if(isClose){
+          trainStations.push({title: station.Name, subtitle: distanceInKm + 'km', distance: distanceInKm, stopPointRef: station.StopPointRef});
         }
+        trainStations = trainStations.sort(
+          function(a, b){return a.distance-b.distance;}
+        );
       }
       
       stationsMenu.show();

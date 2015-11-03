@@ -1,6 +1,6 @@
-var isClose = function(closeTresholdInKm, origin, destination){
+var getProximity = function(closeTresholdInKm, origin, destination){
   var distanceInKm = getDistanceFromLatLonInKm(origin.lat, origin.lng, destination.lat, destination.lng);
-  return distanceInKm < closeTresholdInKm;
+  return {distanceInKm: distanceInKm.toFixed(2), isClose: !closeTresholdInKm || distanceInKm < closeTresholdInKm};
 };
 
 //http://stackoverflow.com/a/27943
@@ -23,4 +23,4 @@ function deg2rad(deg) {
 }
 //End http://stackoverflow.com/a/27943
 
-exports.isClose = isClose;
+exports.getProximity = getProximity;
