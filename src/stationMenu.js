@@ -48,6 +48,7 @@ exports.show = function(s){
       
         var stationMenu = new UI.Menu({
           sections: [{
+            //Fix issue #2
             title: station.title,
             items: departures
           }],
